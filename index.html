@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase CRUD 應用程式</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Google Fonts - Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <h1>使用 Vanilla JS & Vite 的 Firebase CRUD</h1>
+
+      <!-- Button to Open Modal -->
+      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#productModal" id="open-product-modal-btn">
+        新增產品
+      </button>
+
+      <!-- Product Modal -->
+      <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="productModalLabel">新增/編輯產品</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="product-form">
+                <div class="mb-3">
+                  <label for="product-name" class="form-label">產品名稱</label>
+                  <input type="text" class="form-control" id="product-name" placeholder="產品名稱" required>
+                </div>
+                <div class="mb-3">
+                  <label for="product-price" class="form-label">產品價格</label>
+                  <input type="number" class="form-control" id="product-price" placeholder="產品價格" required>
+                </div>
+                <div class="mb-3">
+                  <label for="product-description" class="form-label">產品描述</label>
+                  <textarea class="form-control" id="product-description" placeholder="產品描述"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal-cancel-btn">關閉</button>
+                  <button type="submit" class="btn btn-primary" id="submit-btn">新增產品</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sort-controls">
+        <label for="sort-by">排序方式：</label>
+        <select id="sort-by" class="form-select">
+          <option value="createdAt_desc">最新</option>
+          <option value="name_asc">名稱 (A-Z)</option>
+          <option value="name_desc">名稱 (Z-A)</option>
+          <option value="price_asc">價格 (低到高)</option>
+          <option value="price_desc">價格 (高到低)</option>
+        </select>
+      </div>
+
+      <div class="filter-controls">
+        <label for="filter-name">按名稱篩選：</label>
+        <input type="text" id="filter-name" placeholder="搜尋產品名稱" class="form-control">
+      </div>
+
+      <h2>產品列表</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>標題</th>
+              <th>價格</th>
+              <th>描述</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="products-list">
+            <!-- Products will be rendered here by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination Controls -->
+      <nav aria-label="Page navigation" class="mt-3">
+        <ul class="pagination justify-content-center" id="pagination-controls">
+          <li class="page-item disabled" id="prev-page-li">
+            <button class="page-link" id="prev-page-btn">上一頁</button>
+          </li>
+          <li class="page-item active" id="current-page-li">
+            <span class="page-link" id="current-page">1</span>
+          </li>
+          <li class="page-item" id="next-page-li">
+            <button class="page-link" id="next-page-btn">下一頁</button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- View Product Details Modal -->
+      <div class="modal fade" id="viewProductModal" tabindex="-1" aria-labelledby="viewProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="viewProductModalLabel">產品詳情</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="view-product-details">
+              <!-- Product details will be displayed here -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <script type="module" src="/src/main.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

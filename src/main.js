@@ -26,9 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const productModalLabel = document.getElementById('productModalLabel');
   const openProductModalBtn = document.getElementById('open-product-modal-btn');
 
-  const viewProductModalElement = document.getElementById('viewProductModal');
-  const viewProductModal = new bootstrap.Modal(viewProductModalElement);
-  const viewProductDetails = document.getElementById('view-product-details');
+  // const viewProductModalElement = document.getElementById('viewProductModal'); // Removed
+  // const viewProductModal = new bootstrap.Modal(viewProductModalElement); // Removed
+  // const viewProductDetails = document.getElementById('view-product-details'); // Removed
 
   let isEditMode = false;
   let editingProductId = null;
@@ -155,11 +155,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                 : product.description;
 
           productRow.innerHTML = `
-            <td>${product.name}</td>
+            <td><a href="detail.html?id=${productId}" class="text-primary fw-bold">${product.name}</a></td>
             <td>$${product.price}</td>
             <td>${shortDescription}</td>
             <td>
-              <button class="btn btn-info btn-sm me-1 view-btn" data-id="${productId}" data-bs-toggle="modal" data-bs-target="#viewProductModal">查看</button>
               <button class="btn btn-warning btn-sm me-1 edit-btn" data-id="${productId}" data-bs-toggle="modal" data-bs-target="#productModal">編輯</button>
               <button class="btn btn-danger btn-sm delete-btn" data-id="${productId}">刪除</button>
             </td>
@@ -193,21 +192,21 @@ document.addEventListener('DOMContentLoaded', () => {
       currentPageLink.textContent = currentPage; // Update text for current page link
       // currentPageSpan.textContent = currentPage; // Removed
 
-      // Attach event listeners to view buttons
-      document.querySelectorAll('.view-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-          const id = e.target.dataset.id;
-          const productToView = snapshot.docs.find(doc => doc.id === id).data();
+      // Remove event listeners to view buttons as title is now the clickable element
+      // document.querySelectorAll('.view-btn').forEach(button => {
+      //   button.addEventListener('click', (e) => {
+      //     const id = e.target.dataset.id;
+      //     const productToView = snapshot.docs.find(doc => doc.id === id).data();
 
-          viewProductDetails.innerHTML = `
-            <h5>名稱: ${productToView.name}</h5>
-            <p><strong>價格:</strong> $${productToView.price}</p>
-            <p><strong>描述:</strong> ${productToView.description}</p>
-            <p><strong>新增時間:</strong> ${productToView.createdAt ? new Date(productToView.createdAt.toDate()).toLocaleString() : 'N/A'}</p>
-          `;
-          // Modal is opened by data-bs-toggle attributes, no need to manually call show()
-        });
-      });
+      //     viewProductDetails.innerHTML = `
+      //       <h5>名稱: ${productToView.name}</h5>
+      //       <p><strong>價格:</strong> $${productToView.price}</p>
+      //       <p><strong>描述:</strong> ${productToView.description}</p>
+      //       <p><strong>新增時間:</strong> ${productToView.createdAt ? new Date(productToView.createdAt.toDate()).toLocaleString() : 'N/A'}</p>
+      //     `;
+      //     // Modal is opened by data-bs-toggle attributes, no need to manually call show()
+      //   });
+      // });
 
       // Attach event listeners to edit buttons
       document.querySelectorAll('.edit-btn').forEach(button => {
@@ -292,8 +291,24 @@ document.addEventListener('DOMContentLoaded', () => {
     resetFormAndExitEditMode();
   });
 
-  // Handle view product modal close event
-  viewProductModalElement.addEventListener('hidden.bs.modal', () => {
-    viewProductDetails.innerHTML = ''; // Clear details when modal closes
-  });
+  // Handle view product modal close event // Removed
+  // viewProductModalElement.addEventListener('hidden.bs.modal', () => {
+  //   viewProductDetails.innerHTML = ''; // Clear details when modal closes
+  // });
+
+  // Attach event listener to product titles for viewing details // Removed as direct link is used now
+  // productsList.addEventListener('click', (e) => {
+  //   if (e.target.classList.contains('product-title-link')) {
+  //     const id = e.target.dataset.id;
+  //     const productToView = snapshot.docs.find(doc => doc.id === id).data();
+
+  //     viewProductDetails.innerHTML = `
+  //       <h5>名稱: ${productToView.name}</h5>
+  //       <p><strong>價格:</strong> $${productToView.price}</p>
+  //       <p><strong>描述:</strong> ${productToView.description}</p>
+  //       <p><strong>新增時間:</strong> ${productToView.createdAt ? new Date(productToView.createdAt.toDate()).toLocaleString() : 'N/A'}</p>
+  //     `;
+  //     viewProductModal.show(); // Manually show modal since it's not a data-bs-toggle button
+  //   }
+  // });
 });

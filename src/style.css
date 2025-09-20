@@ -7,8 +7,6 @@ body {
 }
 
 #app {
-  max-width: 960px;
-  margin: 30px auto;
   background-color: #fff;
   padding: 30px;
   border-radius: 10px;
